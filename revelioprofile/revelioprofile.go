@@ -12,7 +12,7 @@ import (
 
 type RevelioProfile struct{}
 
-func worker(command string, args []string, outputfile string, ip string, r *librevelio.Revelio, wg *sync.WaitGroup) {
+func worker(command string, args []string, outputfile string, r *librevelio.Revelio, wg *sync.WaitGroup) {
 	cmd := exec.Command(command, args...)
 	err := cmd.Run()
 	if err != nil {
@@ -38,6 +38,7 @@ func printResults(outputfile string, wg *sync.WaitGroup, r *librevelio.Revelio) 
 			ports = append(ports, p.PortId)
 		}
 		allPorts := strings.Trim(strings.Join(strings.Fields(fmt.Sprint(ports)), ","), "[]")
+		r.ClearProgress()
 		fmt.Printf("[+] Host: %s - %s\n", hostIP, allPorts)
 	}
 	wg.Done()
@@ -60,7 +61,7 @@ func (s RevelioProfile) Process(r *librevelio.Revelio, ip string, wg *sync.WaitG
 		} else {
 			args = []string{"--open", "--version-intensity=0", "--min-rate=150", "--initial-rtt-timeout=50ms", "--max-rtt-timeout=200ms", "--max-scan-delay=5", "-Pn", "-sS", "-p", portgroup[i], "-oX", outputfile, ip}
 		}
-		go worker("nmap", args, outputfile, ip, r, wg)
+		go worker("nmap", args, outputfile, r, wg)
 	}
 	return nil, nil
 }
