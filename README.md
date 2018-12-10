@@ -49,3 +49,22 @@ $ revelio3 -f livehosts.txt -p -t 5
 [+] Host: 192.168.0.14 - 33596,50833,51104,60000
 2018/12/10 07:05:51 Finished
 ```
+
+## Options
+
+Not many yet, more to come.
+
+```
+  -D string
+    	Output Directory for all files (default "./")
+  -api string
+    	Lair API String
+  -f string
+    	Input file of new line seperated IP's (Format: 127.0.0.1, 127.0.0.0/24, 127.0.0.1-100)
+  -l	Import results to lair #Not tested yet.
+  -p	Perform port profile scan on hosts
+  -pid string
+    	PID for Lair Project
+  -t int
+    	Number of concurrent threads (default 1)
+ ```
